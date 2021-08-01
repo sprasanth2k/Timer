@@ -3,8 +3,14 @@ var second = parseInt(document.getElementById("second-input").value)
 var temp,totalSeconds
 var alarm = new Audio('alarm.mp3')
 alarm.loop = true
+var anim=0
 
 var timer = () => {
+    if(!anim)
+    {
+        document.querySelector('.timer-bg').style.animationPlayState = "running"
+        anim = 1
+    }
     minute = parseInt(minute)
     second = parseInt(second)
     if(second < 10)
@@ -98,15 +104,11 @@ function play()
     document.querySelector('.play').style.display = "none"
     document.querySelector('.pause').style.display = "block"
     document.querySelector('.start').style.display = "none"
-    setTimeout(() => {
-        document.querySelector('.timer-bg').style.animationPlayState = "running"
-    }, 1000)
-    
-
 }
 
 function pause()
 {
+    anim=0
     if(!minute && !second)
     {
         document.querySelector('.play').style.display = "none"
@@ -121,6 +123,7 @@ function pause()
         document.querySelector('.timer-bg').style.animationPlayState = "paused"
     }
     clearInterval(temp)
+    
     alarm.pause()
     alarm.currentTime = 0
 
